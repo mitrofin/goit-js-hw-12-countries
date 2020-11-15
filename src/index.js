@@ -1,7 +1,15 @@
 import './styles.css';
-import './js/fetchCountries';
+import fetchCountries from './js/fetchCountries';
 import countryListTmpl from './templates/country-list.hbs';
+import countryNameTmpl from './templates/country-name.hbs';
+import '@pnotify/core/dist/BrightTheme.css';
+import '@pnotify/core/dist/PNotify.css';
+/* import { error } from '@pnotify/core'; */
+
+const { alert ,info, error } = require('@pnotify/core');
+
 const debounce = require('debounce');
+fetchCountries()
 
 const refs = {
     searchForm: document.querySelector('.js-search'),
@@ -13,39 +21,96 @@ refs.searchForm.addEventListener('input', debounce(onSearch, 500));
 function onSearch(event) {
     event.preventDefault();
     const searchData = event.target.value;
-
-
-    const url = `https://restcountries.eu/rest/v2/name/${searchData}`;
+    clearCounrty()
+    /* setTimeout(clearResult, 10000); */
+    
+    if (searchData.length === 0 || searchData === " ") {
+        clearResult();
+        const myInfo = info({
+            text:
+                "Спробуйте ще раз!",
+        });
+        return;
+    }
+    /* const url = `https://restcountries.eu/rest/v2/name/${searchData}`;
     fetch(url)
         .then(response => {
         return response.json();
-    })
-    .then(country => {
-        /* console.log(country); */
-        const markUp = countryListTmpl(country);
-        console.log(markUp);
-
-        refs.containerList.insertAdjacentHTML('beforeend',markUp);
-    })
+        }) */
+    fetchCountries(searchData)
+            
+        .then(country => {
+        if (country.length > 10) {
+            showError()
+            clearCounrty() 
+        
+        }
+        if (country === undefined) {
+        showAlert()
+        }
+        console.log(country.length);
+    
+        appendCountries(country);
+        })
+      
         .catch(error => {
-        console.log(error);
+            console.log({ error });
         })
     
-
 }
-/* import countryListTmpl from './templates/country-list.hbs';
 
-fetchCountries(); */
+function clearResult() {
+        refs.searchForm.value = "";
+    }
 
-
-const API = fetch('https://restcountries.eu/rest/v2/name/switzerland').then(response => {
-    return response.json();
-})
-.then(country => {
-    /* console.log(country); */
+function clearCounrty() {
+        refs.containerList.innerHTML = "";
+}
+    
+function appendCountries(country) {
     const markUp = countryListTmpl(country);
     console.log(markUp);
-})
-    .catch(error => {
-    console.log(error);
-})
+    const markUpName = countryNameTmpl(country);
+    console.log(markUpName);
+
+    if (country.length === 1) {
+        return (refs.containerList.insertAdjacentHTML('beforeend', markUp));   
+    }
+
+    if (country.length > 1) {
+        return (refs.containerList.insertAdjacentHTML('beforeend', markUpName))
+    }
+
+    if (country.length > 10) {
+        clearCounrty()
+    }
+
+    if (country === undefined) {
+    showAlert()
+  }
+    
+    clearResult();
+    clearCounrty();
+
+}
+
+function showError() {
+    const myError = error({
+    text:
+            "Багато співпадінь.Уточіть пошук! Використовуйте ENG ", 
+    });
+
+}
+function showAlert() {
+    const myAlert = alert({
+    text:
+            "Нічого не знайдено!", 
+    });
+
+}
+
+/* const myError = error({
+    text:
+      "Багато співпадінь. Уточіть пошук!" 
+  }); */
+      

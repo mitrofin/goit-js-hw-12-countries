@@ -16,16 +16,17 @@ body {
 }
 .container-cards {
   max-width: 1600px;
-  display: flex;
-  flex-wrap: wrap;
+  /* display: flex; */
+  /* flex-wrap: wrap; */
   height: 100%;
 }
 .card {
   border: 1px solid rgb(180, 166, 166);
-  width: 32%;
+  width: 100%;
   margin: 5px;
   padding: 5px;
-  display: flex;
+  /* display: flex; */
+  justify-content: center;
   max-height: 650px;
 }
 .info {

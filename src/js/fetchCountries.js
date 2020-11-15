@@ -1,24 +1,12 @@
-/* import countryListTmpl from '..templates/country-list.hbs';
-import { search } from 'core-js/fn/symbol';
+ /* import countryListTmpl from '..templates/country-list.hbs'; */
 
-export default class API {
-    constructor() {
-        this.searchQuery = "";
+export default
+    function fetchCountries(name) {
+        return fetch(`https://restcountries.eu/rest/v2/name/${name}`)
+            .then(response => {
+                /* if (response.ok || response.status == 404) return response.json();
+                throw new Error('Error fetching data'); */
+                return response.json();
+            })
+    
     }
-    fetchCoutry() {
-        return fetch('https://restcountries.eu/rest/v2/name/ukraine').then(response => {
-    return response.json();
-    })
-    .then(country => {
-        console.log(country);
-        const markUp = countryListTmpl(country);
-        console.log(markUp);
-    })
-        .catch(error => {
-        console.log(error);
-    })
-        }
-}
-  
-
- */
