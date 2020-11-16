@@ -7,8 +7,8 @@ import '@pnotify/core/dist/PNotify.css';
 /* import { error } from '@pnotify/core'; */
 
 const { alert, info, error } = require('@pnotify/core');
-error.delay = '1000';
-error.autoOpen = false; 
+/* error.delay = '1000';
+error.autoOpen = false;  */
 
 const debounce = require('debounce');
 fetchCountries()
@@ -31,6 +31,7 @@ function onSearch(event) {
         const myInfo = info({
             text:
                 "Спробуйте ще раз!",
+             delay: 500,
         });
         return;
     } 
@@ -86,16 +87,20 @@ function appendCountries(country) {
 }
 
 function showError() {
-    const myError = error({
+    /* delay: 8000 */
+    const myError = error({      
     text:
-            "Нічого не знайдено! ", 
+            "Нічого не знайдено! ",
+        delay: 700,
     });
+   
 
 }
 function showAlert() {
     const myAlert = alert({
     text:
-            "Багато співпадінь.Уточіть пошук! Використовуйте ENG", 
+            "Багато співпадінь.Уточіть пошук! Використовуйте ENG",
+        delay: 700,
     });
     
 
