@@ -16,8 +16,6 @@ body {
 }
 .container-cards {
   max-width: 1600px;
-  /* display: flex; */
-  /* flex-wrap: wrap; */
   height: 100%;
 }
 .card {
@@ -25,7 +23,6 @@ body {
   width: 100%;
   margin: 5px;
   padding: 5px;
-  /* display: flex; */
   justify-content: center;
   max-height: 650px;
 }

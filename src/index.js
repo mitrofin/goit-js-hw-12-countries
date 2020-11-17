@@ -4,11 +4,8 @@ import countryListTmpl from './templates/country-list.hbs';
 import countryNameTmpl from './templates/country-name.hbs';
 import '@pnotify/core/dist/BrightTheme.css';
 import '@pnotify/core/dist/PNotify.css';
-/* import { error } from '@pnotify/core'; */
 
 const { alert, info, error } = require('@pnotify/core');
-/* error.delay = '1000';
-error.autoOpen = false;  */
 
 const debounce = require('debounce');
 fetchCountries()
@@ -24,7 +21,6 @@ function onSearch(event) {
     event.preventDefault();
     const searchData = event.target.value;
     clearCounrty()
-    /* setTimeout(clearResult, 10000); */
     
     if (searchData.length === 0 || searchData === " ") {
         clearResult();
@@ -41,7 +37,6 @@ function onSearch(event) {
         if (country.length > 10) {
             showAlert()()
             clearCounrty() 
-        
         }
          if (country.status === 404)  {
         showError()
@@ -57,8 +52,6 @@ function onSearch(event) {
     
 }
 
-
-    
 function appendCountries(country) {
     const markUp = countryListTmpl(country);
     console.log(markUp);
@@ -72,29 +65,15 @@ function appendCountries(country) {
     if (country.length > 1) {
         return (refs.containerList.insertAdjacentHTML('beforeend', markUpName))
     }
-
-    /* if (country.length > 10) {
-        clearCounrty()
-        showAlert() 
-    
-    }
-
-    if (country === undefined) {
-    showError()
-  } */
-    
-
 }
 
 function showError() {
-    /* delay: 8000 */
     const myError = error({      
     text:
             "Нічого не знайдено! ",
         delay: 700,
     });
    
-
 }
 function showAlert() {
     const myAlert = alert({
@@ -103,7 +82,6 @@ function showAlert() {
         delay: 700,
     });
     
-
 }
 function clearResult() {
         refs.searchForm.value = "";
